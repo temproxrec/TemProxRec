@@ -14,7 +14,7 @@ pip install -r requirements.txt
 ## Experimental reproduction
 
 Training TemproxRec is produced using the `train.py`. For example, to train on Amazon 'beauty'
-'''
+```
 python main.py --dataset_code='beauty' --time_unit_divide=128 --interval=7 --temperature=0.05 --w2=0.3
-'''
+```
 The running scripts for the best experiment of all datasets ares described in the 'run.sh'
