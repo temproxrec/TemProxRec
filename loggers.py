@@ -1,12 +1,9 @@
 import os
 from abc import ABCMeta, abstractmethod
-
 import torch
-
 
 def save_state_dict(state_dict, path, filename):
     torch.save(state_dict, os.path.join(path, filename))
-
 
 class LoggerService(object):
     def __init__(self, train_loggers=None, val_loggers=None):
@@ -27,7 +24,6 @@ class LoggerService(object):
         for logger in self.val_loggers:
             logger.log(**log_data)
 
-
 class AbstractBaseLogger(metaclass=ABCMeta):
     @abstractmethod
     def log(self, *args, **kwargs):
@@ -35,7 +31,6 @@ class AbstractBaseLogger(metaclass=ABCMeta):
 
     def complete(self, *args, **kwargs):
         pass
-
 
 class RecentModelLogger(AbstractBaseLogger):
     def __init__(self, checkpoint_path, filename='checkpoint-recent.pth'):
@@ -57,7 +52,6 @@ class RecentModelLogger(AbstractBaseLogger):
     def complete(self, *args, **kwargs):
         save_state_dict(kwargs['state_dict'], self.checkpoint_path, self.filename + '.final')
 
-
 class BestModelLogger(AbstractBaseLogger):
     def __init__(self, checkpoint_path, metric_key='mean_iou', filename='best_acc_model.pth'):
         self.checkpoint_path = checkpoint_path
@@ -74,7 +68,6 @@ class BestModelLogger(AbstractBaseLogger):
             print("Update Best {} Model at {}".format(self.metric_key, kwargs['epoch']))
             self.best_metric = current_metric
             save_state_dict(kwargs['state_dict'], self.checkpoint_path, self.filename)
-
 
 class MetricGraphPrinter(AbstractBaseLogger):
     def __init__(self, writer, key='train_loss', graph_name='Train Loss', group_name='metric'):

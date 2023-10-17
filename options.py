@@ -12,7 +12,7 @@ parser = argparse.ArgumentParser(description='RecPlay')
 ################
 # Top Level
 ################
-parser.add_argument('--mode', type=str, default='train', choices=['train'])
+parser.add_argument('--mode', type=str, default='train', choices=['train','test_only'])
 
 ################
 # Test
@@ -34,15 +34,12 @@ parser.add_argument('--split', type=str, default='leave_one_out', help='How to s
 parser.add_argument('--seed', type=int, default=0)
 parser.add_argument('--batch_size', type=int, default=128)
 
-
 ################
-
 # NegativeSampler
 ################
 parser.add_argument('--test_negative_sampler_code', type=str, default='random', choices=['popular', 'random'],
                     help='Method to sample negative items for evaluation')
 parser.add_argument('--test_negative_sample_size', type=int, default=100)
-
 
 ################
 # Trainer
@@ -62,44 +59,34 @@ parser.add_argument('--gamma', type=float, default=1.0, help='Gamma for StepLR')
 # epochs #
 parser.add_argument('--num_epochs', type=int, default=100, help='Number of epochs for training')
 # logger #
-
 parser.add_argument('--log_period_as_iter', type=int, default=12800)
 # evaluation #
 parser.add_argument('--metric_ks', nargs='+', type=int, default=[1, 5, 10, 20, 50], help='ks for Metric@k')
 parser.add_argument('--best_metric', type=str, default='NDCG@10', help='Metric for determining the best model')
-# contrastive learning #
-parser.add_argument('--temperature', type=float, default=0.1, help = 'Temperature of InfoNCE Loss')
-parser.add_argument('--interval', type=int, default=50, help = 'Time interval of Contrastive Learning')
-# loss weight #
-parser.add_argument('--w1', type=float, default=1, help = 'Weight for MLM loss')
-parser.add_argument('--w2', type=float, default=0.25, help = 'Weight for inter sequence contrastive loss')
-parser.add_argument('--beta', type=float, default=0.1, help = 'Weight for weighted contrastive learning')
-
+# contrastive learning called TCL #
+parser.add_argument('--temperature', type=float, default=0.1, help = 'Temperature of TCL Loss')
+parser.add_argument('--interval', type=int, default=50, help = 'Radius of a time window in TCL')
+parser.add_argument('--lamb', type=float, default=0.1, help = 'Weight for TCL Loss')
+parser.add_argument('--tcl', type=str, default='yes')
 
 ################
 # Model
 ################
-#parser.add_argument('--model_code', type=str, default='bert', choices=MODELS.keys())
-#parser.add_argument('--model_init_seed', type=int, default=0)
-
-# BERT # #20508, 11382, 1300)
-parser.add_argument('--bert_max_len', type=int, default=50, help='Length of sequence for bert')
+parser.add_argument('--maxlen', type=int, default=50, help='Length of sequence for bert')
 parser.add_argument('--num_items', type=int, help='Number of total items')
 parser.add_argument('--num_time_items', type=int, help='Number of total time categories')
-parser.add_argument('--bert_hidden_units', type=int, default=32, help='Size of hidden vectors (d_model)')
-parser.add_argument('--bert_num_blocks', type=int, default=2, help='Number of transformer layers')
-parser.add_argument('--bert_num_heads', type=int, default=4, help='Number of heads for multi-attention')
-parser.add_argument('--bert_dropout', type=float, default=0.1, help='Dropout probability to use throughout the model')
-parser.add_argument('--bert_mask_prob', type=float, default=0.2, help='Probability for masking items in the training sequence')
-
+parser.add_argument('--hidden_units', type=int, default=32, help='Size of hidden vectors (d_model)')
+parser.add_argument('--num_blocks', type=int, default=2, help='Number of transformer layers')
+parser.add_argument('--num_heads', type=int, default=4, help='Number of heads for multi-attention')
+parser.add_argument('--dropout', type=float, default=0.1, help='Dropout probability to use throughout the model')
+parser.add_argument('--mask_prob', type=float, default=0.2, help='Probability for masking items in the training sequence')
+parser.add_argument('--clip_time', type=int, default=512, help='clipping value for time interval')
 
 ###############
 # Experiment
 ################
 parser.add_argument('--experiment_dir', type=str, default='experiments')
 parser.add_argument('--experiment_description', type=str, default='downstream')
-parser.add_argument('--time_unit_divide', type=int, default=512)
-parser.add_argument('--ctl', type=str, default='ver0')
 
 ################
 args = parser.parse_args()

@@ -9,3 +9,4 @@ scipy==1.11.1
 seaborn==0.12.2
 tqdm==4.65.0
 wget==3.2
+tensorboardX==2.6.1
