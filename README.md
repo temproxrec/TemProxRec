@@ -11,7 +11,16 @@ Install the required packages into your python environment:
 pip install -r requirements.txt
 ```
 
+## Trained Networks
+The trained network representing the best performances from our experimnets are availabe on [our anonymous Google Drive](https://drive.google.com/drive/folders/1xMVpgk2vs3S8k3OOpui9zDdkT-cz6X28)
+
 ## Experimental reproduction
+
+### For Data Preparation
+We experimeted with four dataset : **Amazon Beauty**, **Video**, **Books**, and **Steam**
+The preprocessed data for all are stored in `./Data/preprocessed` 
+The law data for Beauty and Video are stored in `./Data/beauty` and `./Data/video`
+For law data for Books and Steam are availbalte the are availabe on [our anonymous Google Drive](https://drive.google.com/drive/folders/168xjW9GeqX1OwipPxshSAtW8GaKDEMQB).
 
 ### For Training
 Training TemproxRec is produced by using the `train.py`. For example, to train on Amazon 'beauty'
