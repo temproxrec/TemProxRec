@@ -34,12 +34,11 @@ def setup_train(args):
 def create_experiment_export_folder(args):
     
     file_name = f'{args.dataset_code}' #/hid:{args.hidden_units}-interval:{args.interval}-temp:{args.temperature}-k:{args.clip_time}-wd:{args.weight_decay}-lambda:{args.lamb}'
-    experiment_dir =  args.experiment_dir + '/'+ file_name
+    experiment_dir =  f'./{args.experiment_dir}/{file_name}/'
     experiment_description =  args.experiment_description
     
     if not os.path.exists(experiment_dir):
-        print('here')
-        os.mkdir(experiment_dir)
+        os.makedirs(experiment_dir)
         
     experiment_path = get_name_of_experiment_path(experiment_dir, experiment_description, args.mode)
     if args.mode=='train':
