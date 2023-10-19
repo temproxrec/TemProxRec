@@ -16,12 +16,6 @@ The trained network representing the best performances from our experimnets are 
 
 ## Experimental reproduction
 
-### For Data Preparation
-We experimeted with four dataset : **Amazon Beauty**, **Video**, **Books**, and **Steam**
-The preprocessed data for all are stored in `./Data/preprocessed` 
-The law data for Beauty and Video are stored in `./Data/beauty` and `./Data/video`
-For law data for Books and Steam are availbalte the are availabe on [our anonymous Google Drive](https://drive.google.com/drive/folders/168xjW9GeqX1OwipPxshSAtW8GaKDEMQB).
-
 ### For Training
 Training TemproxRec is produced by using the `train.py`. For example, to train on Amazon 'beauty'
 ```
@@ -34,3 +28,10 @@ By changing the 'mode' to 'test_only' on the training code, the best model store
 ```
 python main.py --dataset_code='beauty' --clip_time=128 --interval=60 --temperature=0.05 --lamb=0.3 --mode=test_only
 ```
+
+### For Data Preparation
+
+We experimeted with four dataset : **Amazon Beauty**, **Video**, **Books**, and **Steam**
+The preprocessed data for all are stored in `./Data/preprocessed` 
+The law data for Beauty and Video are stored in `./Data/beauty` and `./Data/video`
+For law data for Books and Steam are availbalte the are availabe on [our anonymous Google Drive](https://drive.google.com/drive/folders/168xjW9GeqX1OwipPxshSAtW8GaKDEMQB).
